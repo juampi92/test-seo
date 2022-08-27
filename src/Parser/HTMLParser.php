@@ -108,7 +108,7 @@ class HTMLParser
 
     /**
      * @param  string  $xpath
-     * @param string|array<string> $attributes
+     * @param  string|array<string>  $attributes
      * @return string|array<string, string|null>|null
      */
     private function grabAttributeFrom(string $xpath, $attributes)
