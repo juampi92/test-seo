@@ -1,0 +1,49 @@
+{
+  "name": "juampi92/test-seo",
+  "description": "Easy way to test your SEO",
+  "keywords": [
+    "phpunit",
+    "php",
+    "testing",
+    "SEO"
+  ],
+  "homepage": "https://github.com/juampi92/test-seo",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Juan Pablo Barreto",
+      "email": "juampi92@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^8.0",
+    "symfony/dom-crawler": "^6.1"
+  },
+  "require-dev": {
+    "laravel/pint": "^1.0",
+    "phpstan/phpstan": "^1.8",
+    "phpunit/phpunit": "^9.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Juampi92\\TestSEO\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Juampi92\\TestSEO\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "analyse": "vendor/bin/phpstan analyse -c phpstan.neon.dist",
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "vendor/bin/phpunit --coverage",
+    "format": "vendor/bin/pint"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
