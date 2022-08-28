@@ -1,0 +1,26 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method Juampi92\\\\TestSEO\\\\SEOData\\:\\:charset\\(\\) should return string\\|null but returns array\\<string, string\\|null\\>\\|string\\|null\\.$#"
+			count: 1
+			path: src/SEOData.php
+
+		-
+			message: "#^Method Juampi92\\\\TestSEO\\\\SEOData\\:\\:description\\(\\) should return string\\|null but returns array\\<string, string\\|null\\>\\|string\\|null\\.$#"
+			count: 1
+			path: src/SEOData.php
+
+		-
+			message: "#^Method Juampi92\\\\TestSEO\\\\SEOData\\:\\:image\\(\\) should return string\\|null but returns array\\<string, string\\|null\\>\\|string\\|null\\.$#"
+			count: 1
+			path: src/SEOData.php
+
+		-
+			message: "#^Parameter \\#1 \\$content of class Juampi92\\\\TestSEO\\\\Tags\\\\Robots constructor expects string, array\\<string, string\\|null\\>\\|string given\\.$#"
+			count: 1
+			path: src/SEOData.php
+
+		-
+			message: "#^Parameter \\#1 \\$url of class Juampi92\\\\TestSEO\\\\Tags\\\\Url constructor expects string, array\\<string, string\\|null\\>\\|string given\\.$#"
+			count: 3
+			path: src/SEOData.php

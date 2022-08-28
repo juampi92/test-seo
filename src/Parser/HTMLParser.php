@@ -60,7 +60,7 @@ class HTMLParser
      */
     private function getArgumentsFromNode($element, $attributes)
     {
-        if (!$element || !($element instanceof DOMElement)) {
+        if (! $element || ! ($element instanceof DOMElement)) {
             return [];
         }
 
