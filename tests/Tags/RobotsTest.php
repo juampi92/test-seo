@@ -27,7 +27,7 @@ class RobotsTest extends TestCase
         $this->assertFalse($robots->follow());
     }
 
-    public function test_empty(): void
+    public function test_empty_on_invalid(): void
     {
         $robots = new Robots(' invalid ');
 
@@ -49,11 +49,20 @@ class RobotsTest extends TestCase
 
     public function test_others_dont_match(): void
     {
-        $robots = new Robots('');
+        $robots = new Robots('index');
 
         $this->assertFalse($robots->noimageindex());
         $this->assertFalse($robots->noarchive());
         $this->assertFalse($robots->nocache());
         $this->assertFalse($robots->nosnippet());
+    }
+
+    public function test_empty(): void
+    {
+        $robots = new Robots('');
+
+        $this->assertTrue($robots->isEmpty());
+        $this->assertNull($robots->index());
+        $this->assertNull($robots->follow());
     }
 }

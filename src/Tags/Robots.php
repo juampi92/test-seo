@@ -30,12 +30,15 @@ class Robots implements Stringable
     public function __construct(
         string $content
     ) {
-        $this->parameters = array_map(
+        /** @var array<Robots::*> */
+        $parameters = array_map(
             'trim',
             explode(',', $content)
         );
 
-        sort($this->parameters);
+        sort($parameters);
+
+        $this->parameters = array_filter($parameters);
     }
 
     public function index(): ?bool
@@ -104,6 +107,11 @@ class Robots implements Stringable
         return $this->has(self::NO_IMAGE_INDEX);
     }
 
+    public function isEmpty(): bool
+    {
+        return count($this->parameters) === 0;
+    }
+
     /*
      * Support methods.
      */
@@ -128,6 +136,6 @@ class Robots implements Stringable
 
     public function __toString(): string
     {
-        return implode(',', $this->parameters);
+        return implode(', ', $this->parameters);
     }
 }
