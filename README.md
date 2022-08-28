@@ -7,15 +7,15 @@
 
 An easy-to-use package for testing SEO. The package allows you to extract SEO tags from a given HTML and verify that the SEO structure is correct.
 
-- [Installation](#Instalation)
-- [Usage](#Usage)
-  - [PHPUnit](#PHPUnit)
-  - [Laravel](#Laravel)
-  - [Pest](#Pest)
-- [API](#SEO Data)
-  - [SEO Data](#SEO Data)
-  - [Assertions](#Assertions)
-- [Snapshot testing](#Snapshots)
+- [Installation](#instalation)
+- [Usage](#usage)
+  - [PHPUnit](#phpunit)
+  - [Laravel](#laravel)
+  - [Pest](#pest)
+- [API](#seo-data)
+  - [SEO Data](#seo-data)
+  - [Assertions](#sssertions)
+- [Snapshot testing](#snapshots)
 
 ----
 ## Installation
