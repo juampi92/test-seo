@@ -22,14 +22,14 @@ class SEOData
 
     public function title(): ?string
     {
-        return $this->memo('title', fn() => $this->html->grabTextFrom('//html//head//title'));
+        return $this->memo('title', fn () => $this->html->grabTextFrom('//html//head//title'));
     }
 
     public function description(): ?string
     {
         return $this->memo(
             'description',
-            fn() => $this->html->grabAttributeFrom('//html//head//meta[@name="description"]', 'content')
+            fn () => $this->html->grabAttributeFrom('//html//head//meta[@name="description"]', 'content')
         );
     }
 
