@@ -28,9 +28,11 @@ class SEOData
         return $this->html->grabAttributeFrom('//html//head//meta[@name="description"]', 'content');
     }
 
-    public function image(): ?string
+    public function image(): ?Url
     {
-        return $this->html->grabAttributeFrom('//html//head//meta[@name="image"]', 'content');
+        $url = $this->html->grabAttributeFrom('//html//head//meta[@name="image"]', 'content');
+
+        return $url ? Url::fromString($url) : null;
     }
 
     public function robots(): Robots
