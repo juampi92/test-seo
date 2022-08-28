@@ -2,6 +2,7 @@
 
 namespace Juampi92\TestSEO\Parser;
 
+use DOMElement;
 use DOMNode;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -14,94 +15,7 @@ class HTMLParser
         $this->crawler = new Crawler($html);
     }
 
-    public function grabTitle(): ?string
-    {
-        return $this->grabTextFrom('//html//head//title');
-    }
-
-    public function grabDescription(): ?string
-    {
-        return $this->grabAttributeFrom('//html//head//meta[@name="description"]', 'content');
-    }
-
-    public function grabRobots(): ?string
-    {
-        return $this->grabAttributeFrom('//html//head//meta[@name="robots"]', 'content');
-    }
-
-    public function grabCanonical(): ?string
-    {
-        return $this->grabAttributeFrom('//html//head//link[@rel="canonical"]', 'href');
-    }
-
-    public function grabPrev(): ?string
-    {
-        return $this->grabAttributeFrom('//html//head//link[@rel="prev"]', 'href');
-    }
-
-    public function grabNext(): ?string
-    {
-        return $this->grabAttributeFrom('//html//head//link[@rel="next"]', 'href');
-    }
-
-    public function grabOpenGraph(string $type): ?string
-    {
-        return $this->grabAttributeFrom(
-            sprintf('//html//head//meta[@name="og:%s"]', $type),
-            'content'
-        );
-    }
-
-    public function grabTwitter(string $type): ?string
-    {
-        return $this->grabAttributeFrom(
-            sprintf('//html//head//meta[@name="twitter:%s"]', $type),
-            'content'
-        );
-    }
-
-    /**
-     * @return array<array{hreflang: string, href: string}>
-     */
-    public function grabRelAlternateHrefLang(): array
-    {
-        return $this->grabMultiple('//html//head//link[@rel="alternate"]', ['hreflang', 'href']);
-    }
-
-    /**
-     * @return array<array{src: string, alt: string, title: string}>
-     */
-    public function grabImages(): array
-    {
-        return $this->grabMultiple('//html//body//img', ['src', 'alt', 'title']);
-    }
-
-    /**
-     * @return array<string>
-     */
-    public function grabH1s(): array
-    {
-        return $this->grabMultiple('//html//body//h1');
-    }
-
-    /**
-     * @return array<string>
-     */
-    public function grabH2s(): array
-    {
-        return $this->grabMultiple('//html//body//h2');
-    }
-
-    public function grabCharset(): ?string
-    {
-        return $this->grabAttributeFrom('//html//head//meta[@charset]', 'charset');
-    }
-
-    /*
-     * Crawler helpers.
-     */
-
-    private function grabTextFrom(string $xpath): ?string
+    public function grabTextFrom(string $xpath): ?string
     {
         return $this->crawler->filterXPath($xpath)->text('') ?: null;
     }
@@ -111,7 +25,7 @@ class HTMLParser
      * @param  string|array<string>  $attributes
      * @return string|array<string, string|null>|null
      */
-    private function grabAttributeFrom(string $xpath, $attributes)
+    public function grabAttributeFrom(string $xpath, $attributes)
     {
         $nodes = $this->crawler->filterXPath($xpath);
 
@@ -127,7 +41,7 @@ class HTMLParser
      * @param  string|array<string>|null  $attribute
      * @return array
      */
-    private function grabMultiple(string $xpath, $attribute = null)
+    public function grabMultiple(string $xpath, $attribute = null): array
     {
         $result = [];
         $nodes = $this->crawler->filterXPath($xpath);
@@ -140,20 +54,24 @@ class HTMLParser
     }
 
     /**
-     * @param  DOMNode  $node
+     * @param  DOMElement|DOMNode|null  $element
      * @param  string|array<string>  $attributes
-     * @return string|array
+     * @return string|array<string, string|null>
      */
-    private function getArgumentsFromNode(DOMNode $node, $attributes)
+    private function getArgumentsFromNode($element, $attributes)
     {
+        if (!$element || !($element instanceof DOMElement)) {
+            return [];
+        }
+
         if (is_string($attributes)) {
-            return $node->getAttribute($attributes);
+            return $element->getAttribute($attributes);
         }
 
         $result = [];
 
         foreach ($attributes as $attribute) {
-            $result[$attribute] = $node->getAttribute($attribute) ?? null;
+            $result[$attribute] = $element->getAttribute($attribute) ?: null;
         }
 
         return $result;

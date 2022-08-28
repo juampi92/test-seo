@@ -22,49 +22,101 @@ EMPTY_HTML;
         $parser = new HTMLParser($page);
 
         // Assert
-        $this->assertNull($parser->grabTitle());
-        $this->assertNull($parser->grabTitle());
-        $this->assertNull($parser->grabDescription());
-        $this->assertNull($parser->grabRobots());
-        $this->assertNull($parser->grabCanonical());
-        $this->assertNull($parser->grabPrev());
-        $this->assertNull($parser->grabNext());
-        $this->assertNull($parser->grabOpenGraph('site_name'));
-        $this->assertNull($parser->grabTwitter('site_name'));
-        $this->assertEmpty($parser->grabRelAlternateHrefLang());
-        $this->assertEmpty($parser->grabImages());
-        $this->assertEmpty($parser->grabH1s());
-        $this->assertEmpty($parser->grabH2s());
-        $this->assertNull($parser->grabCharset());
+        $this->assertNull($parser->grabTextFrom('//html//head//title'));
+        $this->assertEmpty($parser->grabMultiple('//html//head//meta', 'content'));
+        $this->assertNull($parser->grabAttributeFrom('//html//head//link[@rel="canonical"]', 'href'));
     }
 
-    public function test_it_parses_html_into_instance(): void
+    public function test_it_can_grab_text(): void
     {
         // Arrange
-        $page = file_get_contents(__DIR__.'/stubs/test.html');
+        $page = <<<'HTML'
+<!DOCTYPE html>
+<html>
+    <body>
+        <p>This is the text inside a P</p>    
+    </body>
+</html>
+HTML;
 
         // Act
         $parser = new HTMLParser($page);
 
         // Assert
-        $this->assertEquals('This is my test title.', $parser->grabTitle());
-        $this->assertEquals('This is the description of the test page.', $parser->grabDescription());
-        $this->assertEquals('index, follow', $parser->grabRobots());
-        $this->assertEquals('https://testpage.com/example.html', $parser->grabCanonical());
-        $this->assertEquals('https://testpage.com/example.html?page=1', $parser->grabPrev());
-        $this->assertEquals('https://testpage.com/example.html?page=3', $parser->grabNext());
-        $this->assertEquals('OGFooBar', $parser->grabOpenGraph('site_name'));
-        $this->assertEquals('TwitterFooBar', $parser->grabTwitter('card'));
-        $this->assertEquals([
-            ['hreflang' => 'es', 'href' => 'https://testpage.com/es/example.html'],
-            ['hreflang' => 'pt', 'href' => 'https://testpage.com/pt/example.html'],
-        ], $parser->grabRelAlternateHrefLang());
-        $this->assertEquals([
-            ['src' => 'test-image.jpg', 'alt' => 'My alt text', 'title' => null],
-        ], $parser->grabImages());
-        $this->assertEquals(['Header example'], $parser->grabH1s());
-        $this->assertEquals(['Header 2 example', 'Header 2 example 2'], $parser->grabH2s());
-        $this->assertEquals('utf-8', $parser->grabCharset());
-//        $this->assertEquals('', $parser->grabAmpHtmlLink());
+        $this->assertEquals(
+            'This is the text inside a P',
+            $parser->grabTextFrom('//html//body//p')
+        );
+    }
+
+    public function test_it_can_grab_multiple(): void
+    {
+        // Arrange
+        $page = <<<'HTML'
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="oops" foo="cool" bar="story">
+        <meta name="oops" foo="cool_2" bar="story_2" nope="yup">    
+    </head>
+</html>
+HTML;
+
+        // Act
+        $parser = new HTMLParser($page);
+
+        // Assert
+        $this->assertEquals(
+            ['cool', 'cool_2'],
+            $parser->grabMultiple('//html//head//meta[@name="oops"]', 'foo'),
+            'It can\'t extract a single attribute'
+        );
+        $this->assertEquals(
+            [null, 'yup'],
+            $parser->grabMultiple('//html//head//meta[@name="oops"]', 'nope'),
+            'It can\'t extract an single optional attribute'
+        );
+        $this->assertEquals(
+            [
+                ['foo' => 'cool', 'bar' => 'story', 'nope' => ''],
+                ['foo' => 'cool_2', 'bar' => 'story_2', 'nope' => 'yup'],
+            ],
+            $parser->grabMultiple('//html//head//meta[@name="oops"]', ['foo', 'bar', 'nope']),
+            'It can\'t extract multiple attributes'
+        );
+    }
+
+    public function test_it_can_grab_attribute(): void
+    {
+        // Arrange
+        $page = <<<'HTML'
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="oops" foo="cool" bar="story">
+        <meta name="oops" foo="cool_2" bar="story_2" nope="yup">    
+    </head>
+</html>
+HTML;
+
+        // Act
+        $parser = new HTMLParser($page);
+
+        // Assert
+        $this->assertEquals(
+            'cool',
+            $parser->grabAttributeFrom('//html//head//meta[@name="oops"]', 'foo'),
+            'It can\'t extract a single attribute'
+        );
+        $this->assertEquals(
+            null,
+            $parser->grabAttributeFrom('//html//head//meta[@name="oops"]', 'nope'),
+            'It can\'t extract an single optional attribute'
+        );
+        $this->assertEquals(
+            ['foo' => 'cool', 'bar' => 'story', 'nope' => ''],
+            $parser->grabAttributeFrom('//html//head//meta[@name="oops"]', ['foo', 'bar', 'nope']),
+            'It can\'t extract multiple attributes'
+        );
     }
 }
