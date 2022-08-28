@@ -26,12 +26,13 @@ EMPTY_HTML;
         // Assert
         $this->assertNull($seo->title());
         $this->assertNull($seo->description());
+        $this->assertNull($seo->image());
         $this->assertTrue($seo->robots()->isEmpty());
         $this->assertNull($seo->canonical());
         $this->assertNull($seo->prev());
         $this->assertNull($seo->next());
-        $this->assertNull($seo->openGraph());
-        $this->assertNull($seo->twitter('site_name'));
+        $this->assertEmpty($seo->openGraph()->toArray());
+        $this->assertEmpty($seo->twitter()->toArray());
         $this->assertEmpty($seo->alternateHrefLang()->jsonSerialize());
         $this->assertEmpty($seo->images());
         $this->assertEmpty($seo->h1s());
@@ -51,6 +52,7 @@ EMPTY_HTML;
         // Assert
         $this->assertEquals('This is my test title.', $seo->title());
         $this->assertEquals('This is the description of the test page.', $seo->description());
+        $this->assertEquals('https://testpage.com/image.jpg', $seo->image());
         $this->assertEquals('follow, index', (string) $seo->robots());
         $this->assertEquals('https://testpage.com/example.html', $seo->canonical());
         $this->assertEquals('https://testpage.com/example.html?page=1', $seo->prev());

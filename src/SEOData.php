@@ -2,6 +2,7 @@
 
 namespace Juampi92\TestSEO;
 
+use Illuminate\Support\Traits\Macroable;
 use Juampi92\TestSEO\Parser\HTMLParser;
 use Juampi92\TestSEO\Tags\AlternateHrefLangCollection;
 use Juampi92\TestSEO\Tags\Robots;
@@ -10,6 +11,8 @@ use Juampi92\TestSEO\Tags\Url;
 
 class SEOData
 {
+    use Macroable;
+
     public function __construct(
         private HTMLParser $html
     ) {
@@ -23,6 +26,11 @@ class SEOData
     public function description(): ?string
     {
         return $this->html->grabAttributeFrom('//html//head//meta[@name="description"]', 'content');
+    }
+
+    public function image(): ?string
+    {
+        return $this->html->grabAttributeFrom('//html//head//meta[@name="image"]', 'content');
     }
 
     public function robots(): Robots
@@ -53,30 +61,22 @@ class SEOData
         return $url ? new Url($url) : null;
     }
 
-    public function openGraph(): ?TagCollection
+    public function openGraph(): TagCollection
     {
         $tags = $this->html->grabMultiple(
             '//html//head//meta[starts-with(@name, "og:")]',
             ['name', 'content'],
         );
 
-        if (empty($tags)) {
-            return null;
-        }
-
         return new TagCollection('og:', $tags);
     }
 
-    public function twitter(): ?TagCollection
+    public function twitter(): TagCollection
     {
         $tags = $this->html->grabMultiple(
             '//html//head//meta[starts-with(@name, "twitter:")]',
             ['name', 'content'],
         );
-
-        if (empty($tags)) {
-            return null;
-        }
 
         return new TagCollection('twitter:', $tags);
     }

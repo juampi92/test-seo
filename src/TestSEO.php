@@ -2,17 +2,23 @@
 
 namespace Juampi92\TestSEO;
 
+use JsonSerializable;
 use Juampi92\TestSEO\Parser\HTMLParser;
+use Juampi92\TestSEO\SnapshotFormatters\SimpleFormatter;
+use Juampi92\TestSEO\SnapshotFormatters\SnapshotFormatter;
 use PHPUnit\Framework\Assert;
 
-class TestSEO
+class TestSEO implements JsonSerializable
 {
     public SEOData $data;
 
-    public function __construct(string $content)
+    private SnapshotFormatter $snapshotFormatter;
+
+    public function __construct(string $content, ?SnapshotFormatter $snapshotFormatter = null)
     {
         $html = new HTMLParser($content);
         $this->data = new SEOData($html);
+        $this->snapshotFormatter = $snapshotFormatter ?? new SimpleFormatter();
     }
 
     /*
@@ -58,9 +64,9 @@ class TestSEO
         return $this;
     }
 
-    public function assertAlternateHrefLangsIsEmpty(): self
+    public function assertAlternateHrefLangIsEmpty(): self
     {
-        Assert::assertTrue($this->data->alternateHrefLang());
+        Assert::assertEmpty($this->data->alternateHrefLang()->getHreflangs());
 
         return $this;
     }
@@ -68,6 +74,13 @@ class TestSEO
     public function assertTitleIs(string $expected): self
     {
         Assert::assertEquals($expected, $this->data->title());
+
+        return $this;
+    }
+
+    public function assertTitleContains(string $expected): self
+    {
+        Assert::assertStringContainsString($expected, $this->data->title());
 
         return $this;
     }
@@ -86,12 +99,31 @@ class TestSEO
         return $this;
     }
 
+    public function assertThereIsOnlyOneH1(): self
+    {
+        Assert::assertCount(1, $this->data->h1s(), 'It was expected to have exactly one header 1.');
+
+        return $this;
+    }
+
+    public function assertAllImagesHaveAltText(): self
+    {
+        $imagesWithoutAlt = array_filter(
+            $this->data->images(),
+            fn (array $image): bool => empty($image['alt'])
+        );
+
+        Assert::assertEmpty($imagesWithoutAlt, 'Some images were missing alt text.');
+
+        return $this;
+    }
+
     /*
      * To Snapshot
      */
 
-    public function toArray(): array
+    public function jsonSerialize(): mixed
     {
-        return [];
+        return $this->snapshotFormatter->toArray($this->data);
     }
 }

@@ -2,9 +2,10 @@
 
 namespace Juampi92\TestSEO\Tags;
 
+use JsonSerializable;
 use Stringable;
 
-class Robots implements Stringable
+class Robots implements Stringable, JsonSerializable
 {
     public const INDEX = 'index';
 
@@ -137,5 +138,10 @@ class Robots implements Stringable
     public function __toString(): string
     {
         return implode(', ', $this->parameters);
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return (string) $this;
     }
 }

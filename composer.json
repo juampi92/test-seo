@@ -18,8 +18,9 @@
   ],
   "require": {
     "php": "^8.0",
-    "symfony/dom-crawler": "^6.1",
-    "phpunit/phpunit": "^8.3|^9.0"
+    "illuminate/macroable": "^9.26",
+    "phpunit/phpunit": "^8.3|^9.0",
+    "symfony/dom-crawler": "^6.1"
   },
   "require-dev": {
     "laravel/pint": "^1.0",
