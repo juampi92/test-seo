@@ -12,7 +12,7 @@ class SimpleFormatter implements SnapshotFormatter
         return [
             'title' => $data->title(),
             'description' => $data->description(),
-            'robots' => $data->robots(),
+            'robots' => (string) $data->robots(),
             'canonical' => $this->formatUrl($data->canonical()),
             'pagination' => [
                 'prev' => $this->formatUrl($data->prev()),
