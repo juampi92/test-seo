@@ -4,6 +4,7 @@ namespace Juampi92\TestSEO;
 
 use Illuminate\Support\Traits\Macroable;
 use Juampi92\TestSEO\Parser\HTMLParser;
+use Juampi92\TestSEO\Support\Memo;
 use Juampi92\TestSEO\Tags\AlternateHrefLangCollection;
 use Juampi92\TestSEO\Tags\Robots;
 use Juampi92\TestSEO\Tags\TagCollection;
@@ -12,6 +13,7 @@ use Spatie\Url\Url;
 class SEOData
 {
     use Macroable;
+    use Memo;
 
     public function __construct(
         private HTMLParser $html
@@ -20,73 +22,94 @@ class SEOData
 
     public function title(): ?string
     {
-        return $this->html->grabTextFrom('//html//head//title');
+        return $this->memo('title', fn() => $this->html->grabTextFrom('//html//head//title'));
     }
 
     public function description(): ?string
     {
-        return $this->html->grabAttributeFrom('//html//head//meta[@name="description"]', 'content');
+        return $this->memo(
+            'description',
+            fn() => $this->html->grabAttributeFrom('//html//head//meta[@name="description"]', 'content')
+        );
     }
 
     public function image(): ?Url
     {
-        $url = $this->html->grabAttributeFrom('//html//head//meta[@name="image"]', 'content');
+        return $this->memo('image', function () {
+            $url = $this->html->grabAttributeFrom('//html//head//meta[@name="image"]', 'content');
 
-        return $url ? Url::fromString($url) : null;
+            return $url ? Url::fromString($url) : null;
+        });
     }
 
     public function robots(): Robots
     {
-        return new Robots(
-            $this->html->grabAttributeFrom('//html//head//meta[@name="robots"]', 'content') ?: ''
+        return $this->memo(
+            'robots',
+            fn () => new Robots(
+                $this->html->grabAttributeFrom('//html//head//meta[@name="robots"]', 'content') ?: ''
+            )
         );
     }
 
     public function canonical(): ?Url
     {
-        $url = $this->html->grabAttributeFrom('//html//head//link[@rel="canonical"]', 'href');
+        return $this->memo('canonical', function () {
+            $url = $this->html->grabAttributeFrom('//html//head//link[@rel="canonical"]', 'href');
 
-        return $url ? Url::fromString($url) : null;
+            return $url ? Url::fromString($url) : null;
+        });
     }
 
     public function prev(): ?Url
     {
-        $url = $this->html->grabAttributeFrom('//html//head//link[@rel="prev"]', 'href');
+        return $this->memo('prev', function () {
+            $url = $this->html->grabAttributeFrom('//html//head//link[@rel="prev"]', 'href');
 
-        return $url ? Url::fromString($url) : null;
+            return $url ? Url::fromString($url) : null;
+        });
     }
 
     public function next(): ?Url
     {
-        $url = $this->html->grabAttributeFrom('//html//head//link[@rel="next"]', 'href');
+        return $this->memo('next', function () {
+            $url = $this->html->grabAttributeFrom('//html//head//link[@rel="next"]', 'href');
 
-        return $url ? Url::fromString($url) : null;
+            return $url ? Url::fromString($url) : null;
+        });
     }
 
     public function openGraph(): TagCollection
     {
-        $tags = $this->html->grabMultiple(
-            '//html//head//meta[starts-with(@name, "og:")]',
-            ['name', 'content'],
-        );
+        return $this->memo('openGraph', function () {
+            $tags = $this->html->grabMultiple(
+                '//html//head//meta[starts-with(@name, "og:")]',
+                ['name', 'content'],
+            );
 
-        return new TagCollection('og:', $tags);
+            return new TagCollection('og:', $tags);
+        });
     }
 
     public function twitter(): TagCollection
     {
-        $tags = $this->html->grabMultiple(
-            '//html//head//meta[starts-with(@name, "twitter:")]',
-            ['name', 'content'],
-        );
+        return $this->memo('twitter', function () {
+            $tags = $this->html->grabMultiple(
+                '//html//head//meta[starts-with(@name, "twitter:")]',
+                ['name', 'content'],
+            );
 
-        return new TagCollection('twitter:', $tags);
+            return new TagCollection('twitter:', $tags);
+        });
     }
 
     public function alternateHrefLang(): AlternateHrefLangCollection
     {
-        return new AlternateHrefLangCollection(
-            $this->html->grabMultiple('//html//head//link[@rel="alternate"]', ['hreflang', 'href'])
+        return $this->memo(
+            'alternateHrefLang',
+            fn () => new AlternateHrefLangCollection(
+                $this->html->grabMultiple('//html//head//link[@rel="alternate"]', ['hreflang', 'href'])
+            )
         );
     }
 
@@ -95,7 +118,7 @@ class SEOData
      */
     public function images(): array
     {
-        return $this->html->grabMultiple('//html//body//img', ['src', 'alt', 'title']);
+        return $this->memo('images', fn () => $this->html->grabMultiple('//html//body//img', ['src', 'alt', 'title']));
     }
 
     /**
@@ -103,7 +126,7 @@ class SEOData
      */
     public function h1s(): array
     {
-        return $this->html->grabMultiple('//html//body//h1');
+        return $this->memo('h1s', fn () => $this->html->grabMultiple('//html//body//h1'));
     }
 
     /**
@@ -111,11 +134,11 @@ class SEOData
      */
     public function h2s(): array
     {
-        return $this->html->grabMultiple('//html//body//h2');
+        return $this->memo('h2s', fn () => $this->html->grabMultiple('//html//body//h2'));
     }
 
     public function charset(): ?string
     {
-        return $this->html->grabAttributeFrom('//html//head//meta[@charset]', 'charset');
+        return $this->memo('charset', fn () => $this->html->grabAttributeFrom('//html//head//meta[@charset]', 'charset'));
     }
 }
