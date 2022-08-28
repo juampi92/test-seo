@@ -5,7 +5,7 @@ namespace Juampi92\TestSEO\SnapshotFormatters;
 use Juampi92\TestSEO\SEOData;
 use Juampi92\TestSEO\Tags\TagCollection;
 
-class SimpleFormatter implements SnapshotFormatter
+class SimpleSerializer implements SnapshotSerializer
 {
     public function toArray(SEOData $data): array
     {
