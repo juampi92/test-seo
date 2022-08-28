@@ -11,16 +11,11 @@ parameters:
 			path: src/SEOData.php
 
 		-
-			message: "#^Method Juampi92\\\\TestSEO\\\\SEOData\\:\\:image\\(\\) should return string\\|null but returns array\\<string, string\\|null\\>\\|string\\|null\\.$#"
-			count: 1
-			path: src/SEOData.php
-
-		-
 			message: "#^Parameter \\#1 \\$content of class Juampi92\\\\TestSEO\\\\Tags\\\\Robots constructor expects string, array\\<string, string\\|null\\>\\|string given\\.$#"
 			count: 1
 			path: src/SEOData.php
 
 		-
-			message: "#^Parameter \\#1 \\$url of class Juampi92\\\\TestSEO\\\\Tags\\\\Url constructor expects string, array\\<string, string\\|null\\>\\|string given\\.$#"
-			count: 3
+			message: "#^Parameter \\#1 \\$url of static method Spatie\\\\Url\\\\Url\\:\\:fromString\\(\\) expects string, array\\<string, string\\|null\\>\\|string given\\.$#"
+			count: 4
 			path: src/SEOData.php
