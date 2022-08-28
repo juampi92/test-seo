@@ -20,6 +20,7 @@
     "php": "^8.0.2",
     "illuminate/macroable": "^9.26",
     "phpunit/phpunit": "^8.3|^9.0",
+    "spatie/url": "^2.1",
     "symfony/dom-crawler": "^5.4|^6.1"
   },
   "require-dev": {

@@ -7,7 +7,7 @@ use Juampi92\TestSEO\Parser\HTMLParser;
 use Juampi92\TestSEO\Tags\AlternateHrefLangCollection;
 use Juampi92\TestSEO\Tags\Robots;
 use Juampi92\TestSEO\Tags\TagCollection;
-use Juampi92\TestSEO\Tags\Url;
+use Spatie\Url\Url;
 
 class SEOData
 {
@@ -44,21 +44,21 @@ class SEOData
     {
         $url = $this->html->grabAttributeFrom('//html//head//link[@rel="canonical"]', 'href');
 
-        return $url ? new Url($url) : null;
+        return $url ? Url::fromString($url) : null;
     }
 
     public function prev(): ?Url
     {
         $url = $this->html->grabAttributeFrom('//html//head//link[@rel="prev"]', 'href');
 
-        return $url ? new Url($url) : null;
+        return $url ? Url::fromString($url) : null;
     }
 
     public function next(): ?Url
     {
         $url = $this->html->grabAttributeFrom('//html//head//link[@rel="next"]', 'href');
 
-        return $url ? new Url($url) : null;
+        return $url ? Url::fromString($url) : null;
     }
 
     public function openGraph(): TagCollection
