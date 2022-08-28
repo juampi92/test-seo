@@ -4,21 +4,21 @@ namespace Juampi92\TestSEO;
 
 use JsonSerializable;
 use Juampi92\TestSEO\Parser\HTMLParser;
-use Juampi92\TestSEO\SnapshotFormatters\SimpleFormatter;
-use Juampi92\TestSEO\SnapshotFormatters\SnapshotFormatter;
+use Juampi92\TestSEO\SnapshotFormatters\SimpleSerializer;
+use Juampi92\TestSEO\SnapshotFormatters\SnapshotSerializer;
 use PHPUnit\Framework\Assert;
 
 class TestSEO implements JsonSerializable
 {
     public SEOData $data;
 
-    private SnapshotFormatter $snapshotFormatter;
+    private SnapshotSerializer $snapshotSerializer;
 
-    public function __construct(string $content, ?SnapshotFormatter $snapshotFormatter = null)
+    public function __construct(string $content, ?SnapshotSerializer $snapshotSerializer = null)
     {
         $html = new HTMLParser($content);
         $this->data = new SEOData($html);
-        $this->snapshotFormatter = $snapshotFormatter ?? new SimpleFormatter();
+        $this->snapshotSerializer = $snapshotSerializer ?? new SimpleSerializer();
     }
 
     /*
@@ -124,6 +124,6 @@ class TestSEO implements JsonSerializable
 
     public function jsonSerialize(): mixed
     {
-        return $this->snapshotFormatter->toArray($this->data);
+        return $this->snapshotSerializer->toArray($this->data);
     }
 }
