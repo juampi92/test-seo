@@ -22,6 +22,22 @@ class TagCollection
         return $this->metadata[$property] ?? null;
     }
 
+    /**
+     * @return string|array<string>|null
+     */
+    public function __call(string $property, array $arguments)
+    {
+        return $this->get($property);
+    }
+
+    /**
+     * @return string|array<string>|null
+     */
+    public function __get(string $property)
+    {
+        return $this->get($property);
+    }
+
     public function toArray(): array
     {
         return $this->metadata;
