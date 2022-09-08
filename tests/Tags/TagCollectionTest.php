@@ -65,4 +65,37 @@ class TagCollectionTest extends TestCase
             ],
         ], $og->toArray());
     }
+
+    public function test_magic_getter_and_call_work(): void
+    {
+        // Arrange
+        $metadata = [
+            'og:title' => 'My Title',
+            'og:image' => [
+                'https://image.url/here.jpg',
+                'https://image.url/here-2.jpg',
+            ],
+        ];
+
+        // Act
+        $og = new TagCollection('og:', $metadata);
+
+        // Assert
+        $this->assertEquals('My Title', $og->title);
+        $this->assertEquals('My Title', $og->title());
+        $this->assertEquals('My Title', $og->get('title'));
+
+        $this->assertEquals([
+            'https://image.url/here.jpg',
+            'https://image.url/here-2.jpg',
+        ], $og->image());
+        $this->assertEquals([
+            'https://image.url/here.jpg',
+            'https://image.url/here-2.jpg',
+        ], $og->image);
+        $this->assertEquals([
+            'https://image.url/here.jpg',
+            'https://image.url/here-2.jpg',
+        ], $og->get('image'));
+    }
 }
