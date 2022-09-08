@@ -83,8 +83,8 @@ class SEOData
     {
         return $this->memo('openGraph', function () {
             $tags = $this->html->grabMultiple(
-                '//html//head//meta[starts-with(@name, "og:")]',
-                ['name', 'content'],
+                '//html//head//meta[starts-with(@property, "og:")]',
+                ['property', 'content'],
             );
 
             return new TagCollection('og:', $tags);

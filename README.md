@@ -126,7 +126,7 @@ Here are the available methods:
 | `canonical()`         | `?Url` [🔍](https://github.com/spatie/url)                                                                                  | `<link rel="canonical" href="{this}">`                      |
 | `prev()`              | `?Url` [🔍](https://github.com/spatie/url)                                                                                  | `<link rel="prev" href="{this}">`                           |
 | `next()`              | `?Url` [🔍](https://github.com/spatie/url)                                                                                  | `<link rel="next" href="{this}">`                           |
-| `openGraph()`         | `TagCollection` [🔍](https://github.com/juampi92/test-seo/blob/main/src/Tags/TagCollection.php)                             | `<meta name="og:{key}" content="{value}">`                  |
+| `openGraph()`         | `TagCollection` [🔍](https://github.com/juampi92/test-seo/blob/main/src/Tags/TagCollection.php)                             | `<meta property="og:{key}" content="{value}">`                  |
 | `twitter()`           | `TagCollection` [🔍](https://github.com/juampi92/test-seo/blob/main/src/Tags/TagCollection.php)                             | `<meta name="twitter:{key}" content="{value}">`             |
 | `alternateHrefLang()` | `AlternateHrefLangCollection` [🔍](https://github.com/juampi92/test-seo/blob/main/src/Tags/AlternateHrefLangCollection.php) | `<link name="alternate" hreflang="{hreflang}" href={href}>` |
 | `images()`            | `array<array{src: string, alt: string, title: string}>`                                                                     | All images in the page. `<img src="...">`                   |
