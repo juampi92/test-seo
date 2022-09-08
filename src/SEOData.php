@@ -4,6 +4,7 @@ namespace Juampi92\TestSEO;
 
 use Illuminate\Support\Traits\Macroable;
 use Juampi92\TestSEO\Parser\HTMLParser;
+use Juampi92\TestSEO\Support\ArrayPluck;
 use Juampi92\TestSEO\Support\Memo;
 use Juampi92\TestSEO\Tags\AlternateHrefLangCollection;
 use Juampi92\TestSEO\Tags\Robots;
@@ -87,7 +88,12 @@ class SEOData
                 ['property', 'content'],
             );
 
-            return new TagCollection('og:', $tags);
+            $tags = (new ArrayPluck($tags))(key: 'property', value: 'content');
+
+            return new TagCollection(
+                prefix: 'og:',
+                metadata: $tags,
+            );
         });
     }
 
@@ -99,7 +105,12 @@ class SEOData
                 ['name', 'content'],
             );
 
-            return new TagCollection('twitter:', $tags);
+            $tags = (new ArrayPluck($tags))(key: 'name', value: 'content');
+
+            return new TagCollection(
+                prefix: 'twitter:',
+                metadata: $tags,
+            );
         });
     }
 
