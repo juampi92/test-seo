@@ -18,14 +18,14 @@
   ],
   "require": {
     "php": "^8.0.2",
-    "illuminate/macroable": "^9.26",
+    "illuminate/macroable": "^7.0|^8.0|^9.0",
     "phpunit/phpunit": "^8.3|^9.0",
     "spatie/url": "^2.1",
     "symfony/dom-crawler": "^5.4|^6.1"
   },
   "require-dev": {
     "laravel/pint": "^1.0",
-    "phpstan/phpstan": "^1.8",
+    "phpstan/phpstan": "^1.0",
     "phpunit/phpunit": "^9.5"
   },
   "autoload": {
