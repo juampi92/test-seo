@@ -14,8 +14,11 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         php: [8.0, 8.1, 8.2]
-        phpunit: [^8.3, 9.*, 10.*]
+        phpunit: [^8.5.23, 9.*, 10.*]
         stability: [prefer-lowest, prefer-stable]
+        exclude:
+          - php: 8.0
+            phpunit: 10.*
 
     name: P${{ matrix.php }} - PHPUnit ${{ matrix.phpunit }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
