@@ -9,7 +9,6 @@ trait Memo
     /**
      * @template TValue
      *
-     * @param  string  $key
      * @param  callable(): TValue  $value
      * @return TValue
      */
