@@ -1,8 +1,8 @@
 # Test SEO
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/juampi92/test-seo.svg?style=flat-square)](https://packagist.org/packages/juampi92/test-seo)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/juampi92/test-seo/run-tests?label=tests)](https://github.com/juampi92/test-seo/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/juampi92/test-seo/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/juampi92/test-seo/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/juampi92/test-seo/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/juampi92/test-seo/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/juampi92/test-seo/pint.yml?branch=main&label=code-style&style=flat-square)](https://github.com/juampi92/test-seo/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/juampi92/test-seo.svg?style=flat-square)](https://packagist.org/packages/juampi92/test-seo)
 
 An easy-to-use package for testing SEO. The package allows you to extract SEO tags from a given HTML and verify that the SEO structure is correct.
