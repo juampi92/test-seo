@@ -18,7 +18,7 @@ class ArrayPluckTest extends TestCase
         );
     }
 
-    public function pluckDataProvider(): array
+    public static function pluckDataProvider(): array
     {
         return [
             'It plucks the values' => [

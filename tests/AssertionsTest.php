@@ -51,7 +51,7 @@ class AssertionsTest extends TestCase
         $evaluation($testSeo);
     }
 
-    public function breakAssertionsCase2DataProvider(): array
+    public static function breakAssertionsCase2DataProvider(): array
     {
         return [
             'Empty canonical' => [fn (TestSEO $testSEO) => $testSEO->assertCanonicalIsEmpty()],
@@ -96,7 +96,7 @@ class AssertionsTest extends TestCase
         $evaluation($testSeo);
     }
 
-    public function breakAssertionsCase3DataProvider(): array
+    public static function breakAssertionsCase3DataProvider(): array
     {
         return [
             'More than one h1' => [fn (TestSEO $testSEO) => $testSEO->assertThereIsOnlyOneH1()],
