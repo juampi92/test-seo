@@ -21,7 +21,6 @@ class HTMLParser
     }
 
     /**
-     * @param  string  $xpath
      * @param  string|array<string>  $attributes
      * @return string|array<string, string|null>|null
      */
@@ -37,9 +36,7 @@ class HTMLParser
     }
 
     /**
-     * @param  string  $xpath
      * @param  string|array<string>|null  $attribute
-     * @return array
      */
     public function grabMultiple(string $xpath, $attribute = null): array
     {
