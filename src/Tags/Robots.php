@@ -5,7 +5,7 @@ namespace Juampi92\TestSEO\Tags;
 use JsonSerializable;
 use Stringable;
 
-class Robots implements Stringable, JsonSerializable
+class Robots implements JsonSerializable, Stringable
 {
     public const INDEX = 'index';
 
