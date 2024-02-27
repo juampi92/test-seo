@@ -69,6 +69,6 @@ EMPTY_HTML;
         $this->assertEquals(['Header example'], $seo->h1s());
         $this->assertEquals(['Header 2 example', 'Header 2 example 2'], $seo->h2s());
         $this->assertEquals('utf-8', $seo->charset());
-//        $this->assertEquals('', $seo->ampHtmlLink());
+        //        $this->assertEquals('', $seo->ampHtmlLink());
     }
 }
