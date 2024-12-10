@@ -18,7 +18,7 @@ class TestSEO implements JsonSerializable
     {
         $html = new HTMLParser($content);
         $this->data = new SEOData($html);
-        $this->snapshotSerializer = $snapshotSerializer ?? new SimpleSerializer();
+        $this->snapshotSerializer = $snapshotSerializer ?? new SimpleSerializer;
     }
 
     /*

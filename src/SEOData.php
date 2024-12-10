@@ -18,8 +18,7 @@ class SEOData
 
     public function __construct(
         private HTMLParser $html
-    ) {
-    }
+    ) {}
 
     public function title(): ?string
     {

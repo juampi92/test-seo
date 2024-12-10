@@ -8,8 +8,7 @@ class TagCollection
         private string $prefix,
         /** @var array<string, string|array<string>> */
         private array $metadata,
-    ) {
-    }
+    ) {}
 
     /**
      * @return string|array<string>|null

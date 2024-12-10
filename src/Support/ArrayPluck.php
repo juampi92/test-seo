@@ -7,9 +7,7 @@ class ArrayPluck
     /**
      * @param  array<array<string, string>>  $items
      */
-    public function __construct(private array $items)
-    {
-    }
+    public function __construct(private array $items) {}
 
     /**
      * @return array<string, string|array<string>>
