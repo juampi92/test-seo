@@ -85,6 +85,7 @@ class TestSEO implements JsonSerializable
         return $this;
     }
 
+    /** @param non-empty-string $expected */
     public function assertTitleEndsWith(string $expected): self
     {
         Assert::assertStringEndsWith($expected, $this->data->title());

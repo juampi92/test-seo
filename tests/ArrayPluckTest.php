@@ -3,6 +3,7 @@
 namespace Juampi92\TestSEO\Tests;
 
 use Juampi92\TestSEO\Support\ArrayPluck;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class ArrayPluckTest extends TestCase
@@ -10,6 +11,7 @@ class ArrayPluckTest extends TestCase
     /**
      * @dataProvider pluckDataProvider
      */
+    #[DataProvider('pluckDataProvider')]
     public function test_should_pluck_array(array $expected, array $items, string $key, string $value): void
     {
         $this->assertEqualsCanonicalizing(
