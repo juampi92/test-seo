@@ -3,6 +3,7 @@
 namespace Juampi92\TestSEO\Tests;
 
 use Juampi92\TestSEO\TestSEO;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 
@@ -37,6 +38,7 @@ class AssertionsTest extends TestCase
     /**
      * @dataProvider breakAssertionsCase2DataProvider
      */
+    #[DataProvider('breakAssertionsCase2DataProvider')]
     public function test_should_break_on_assertions_case_2(callable $evaluation): void
     {
         $this->expectException(ExpectationFailedException::class);
@@ -82,6 +84,7 @@ class AssertionsTest extends TestCase
     /**
      * @dataProvider breakAssertionsCase3DataProvider
      */
+    #[DataProvider('breakAssertionsCase3DataProvider')]
     public function test_should_break_on_assertions_case_3(callable $evaluation): void
     {
         $this->expectException(ExpectationFailedException::class);
